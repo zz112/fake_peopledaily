@@ -1,0 +1,32 @@
+{
+  "pages":[
+    "pages/paper/paper",
+    "pages/article/article",
+    "pages/index/index",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/paper/paper",  
+        "text": "版面"   
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "目录"
+      }
+    ],
+    "selectedColor":"#589ad5"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}
