@@ -59,6 +59,7 @@ Page({
         console.log("文章html",html)
         //解析文章html，获取文章标题、内容等相关信息
         var tmpArticleObj = articleExtract(html, newsHref, pagenum);
+        console.log('解析的文章',tmpArticleObj)
         self.setData({
           articleObj: tmpArticleObj,
         });
