@@ -1,7 +1,7 @@
 var articleObj = {};
-var articleExtract = function (html, newsHref, pagenum) {
+var articleExtract = function(html, newsHref, pagenum) {
   articleObj["newshref"] = newsHref; //该文章的链接
-  articleObj["pagenum"] = pagenum;//该文章所在版面编号
+  articleObj["pagenum"] = pagenum; //该文章所在版面编号
   var html = html.replace(/<br\/>/ig, "\r\n");
   // console.log(articleHtml);
   /*正则*/
@@ -18,50 +18,78 @@ var articleExtract = function (html, newsHref, pagenum) {
   //中间变量
   // var articleHtml = articleMatch[0];//存放匹配的文章部分的html
   var titleHtml = "";
-  var imgHtmlArray = "";//存放匹配的正文图片部分的html
-  var contentHtml = "";//存放匹配的正文文章部分的html
+  var imgHtmlArray = ""; //存放匹配的正文图片部分的html
+  var contentHtml = ""; //存放匹配的正文文章部分的html
 
   //正则匹配结果
-  var titleMatch = html.match(titleReg);//存放匹配的文章的结果
-  var sourceMatch = html.match(sourceReg);//存放的标题部分的html
-  var imgMatch = html.match(imgReg);//存放匹配的正文图片部分的html
-  var contentMatch = html.match(contentReg);//存放匹配的正文文章部分的html 
+  var titleMatch = html.match(titleReg); //存放匹配的文章的结果
+  var sourceMatch = html.match(sourceReg); //存放的标题部分的html
+  var imgMatch = html.match(imgReg); //存放匹配的正文图片部分的html
+  var contentMatch = html.match(contentReg); //存放匹配的正文文章部分的html
+
 
   //结果变量
-  var h1 = "";//主标题
-  var h2 = "";//副标题
-  var h3 = "";//引标题
-  var h4 = "";//不知道代表啥标题
-  var source = "";//来源及日期
-  var imgArray = [];//图片及图片说明
-  var content = [];//文章每段的内容
+  var h1 = ""; //主标题
+  var h2 = ""; //副标题
+  var h3 = ""; //引标题
+  var h4 = ""; //不知道代表啥标题
+  var source = ""; //来源及日期
+  var imgArray = []; //图片及图片说明
+  var content = []; //文章每段的内容
+
   //给中间变量赋值
   titleMatch && (titleHtml = titleMatch[0]);
-  sourceMatch&&(source = sourceMatch[1].replace(/\s+/g,''));
+  sourceMatch && (source = sourceMatch[1].replace(/\s+/g, ''));
   imgMatch && (imgHtmlArray = imgMatch);
   contentMatch && (contentHtml = contentMatch[0]);
-  console.log("图片匹配", imgMatch);
 
-  /**********************************/
-  h1 = titleHtml.match(/<h1>([\s\S]+?)<\/h1>/i)[1];//标题肯定存在，所以用 +
-  h2 = titleHtml.match(/<h2>([\s\S]*?)<\/h2>/i)[1]//副标题不一定存在，所以用 *
-  h3 = titleHtml.match(/<h3>([\s\S]*?)<\/h3>/i)[1]//引标题不一定存在，所以用 *
-  h4 = titleHtml.match(/<h4>([\s\S]*?)<\/h4>/i)[1]//h4不知道是啥标题，所以用 *
-  console.log("h1", h1);
-  console.log("h2", h2);
-  console.log("h3", h3);
-  console.log("h4", h4);
+  /***********图片***********************/
+  if (imgHtmlArray) {
+    var i;
+    var imgSrc = ''
+    var imgDesc = ''
+    
+    for (i = 0; i < imgHtmlArray.length; i++) {
+      imgSrc = imgMatch[i].match(/<img src="(.*?)"[^]*>/i)[1].replace("../../../", 'http://paper.people.com.cn/rmrb/');
+      imgDesc = imgMatch[i].match(/<p>([\s\S]*?)<\/P>/i)[1]
+      imgArray.push({
+        imgSrc: imgSrc,
+        imgDesc: imgDesc
+      })
+    }
+    console.log("图片匹配", imgArray);
+  }
+
+  /*************标题*********************/
+  h1 = titleHtml.match(/<h1>([\s\S]+?)<\/h1>/i)[1]; //标题肯定存在，所以用 +
+  h2 = titleHtml.match(/<h2>([\s\S]*?)<\/h2>/i)[1] //副标题不一定存在，所以用 *
+  h3 = titleHtml.match(/<h3>([\s\S]*?)<\/h3>/i)[1] //引标题不一定存在，所以用 *
+  h4 = titleHtml.match(/<h4>([\s\S]*?)<\/h4>/i)[1] //h4不知道是啥标题，所以用 *
+  console.log("标题 ", h1);
+  console.log("副标题 ", h2);
+  console.log("引标题 ", h3);
+  console.log("不知道是啥的h4 ", h4);
   console.log("来源", source);
   console.log("图片列表", imgHtmlArray);
   console.log("文章段落列表", contentHtml);
-  
 
+  /*************正文*********************/
+  if (contentHtml){
+    var contentArray = [];
+    var contents = contentHtml.match(/<p>.*?<\/p>/ig);
+    var p = {};
+    var text = "";
+    var strong = "strong";
+  }
 
-
-
-
-
-
+  articleObj["titleObj"] = {
+    title: h1,
+    sub: h2,
+    quote: h3,
+    unknown: h4,
+    source: source
+  }
+  articleObj["imgArray"] = imgArray
 
 
   /*
