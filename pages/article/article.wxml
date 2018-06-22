@@ -22,3 +22,4 @@
   </view>
   <!-- <view class="next-article" bindtap='toNextArticle' style="position:fixed;bottom:20rpx;right:40rpx;background-color:#8cb;" data-pagenum="{{currentPagenum}}">下一篇</view> -->
 </view>
+

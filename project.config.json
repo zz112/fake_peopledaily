@@ -4,16 +4,16 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.1.0",
+	"libVersion": "2.0.4",
 	"appid": "touristappid",
-	"projectname": "fake-renmindaliy",
+	"projectname": "fake-peopledaliy",
 	"condition": {
 		"search": {
 			"current": -1,

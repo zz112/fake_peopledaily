@@ -35,7 +35,7 @@ var articleExtract = function(html, newsHref, pagenum) {
   var h4 = ""; //不知道代表啥标题
   var source = ""; //来源及日期
   var imgArray = []; //图片及图片说明
-  var content = []; //文章每段的内容
+  var contentArray = []; //文章每段的内容
 
   //给中间变量赋值
   titleMatch && (titleHtml = titleMatch[0]);
@@ -48,7 +48,7 @@ var articleExtract = function(html, newsHref, pagenum) {
     var i;
     var imgSrc = ''
     var imgDesc = ''
-    
+
     for (i = 0; i < imgHtmlArray.length; i++) {
       imgSrc = imgMatch[i].match(/<img src="(.*?)"[^]*>/i)[1].replace("../../../", 'http://paper.people.com.cn/rmrb/');
       imgDesc = imgMatch[i].match(/<p>([\s\S]*?)<\/P>/i)[1]
@@ -74,12 +74,25 @@ var articleExtract = function(html, newsHref, pagenum) {
   console.log("文章段落列表", contentHtml);
 
   /*************正文*********************/
-  if (contentHtml){
-    var contentArray = [];
+  if (contentHtml) {
     var contents = contentHtml.match(/<p>.*?<\/p>/ig);
     var p = {};
     var text = "";
     var strong = "strong";
+
+    //某些新闻没有正文内容（比如广告，只有一张图片），因此需要判断一下
+    if (contents) {
+      for (i = 0; i < contents.length; i++) {
+        var currentP = contents[i];
+        text = currentP.match(/<p>(.*?)<\/p>/i)[1].replace(/(&nbsp;)+/g, '\t');
+        if ((text.indexOf('STRONG') != -1) || (text.indexOf('FONT') != -1)) {
+          text = text.match(/<strong>(.*?)<\/strong>/i)[1].replace(/(&nbsp;)+/g, '\t');
+          contentArray.push({ "text": text, "strong": strong });
+        } else {
+          contentArray.push({ "text": text });
+        }
+      }
+    }
   }
 
   articleObj["titleObj"] = {
@@ -91,7 +104,9 @@ var articleExtract = function(html, newsHref, pagenum) {
   }
   articleObj["imgArray"] = imgArray
 
+  articleObj['contentArray'] = contentArray;
 
+  return articleObj
   /*
     //图片或其他
     var attachmentReg = /<([-A-Za-z0-9_]+)\s+class="[^>]*attachment"[^>]*>[\s\S]*<\/\1>(?=\s+<div class="article-content" id="APP-Content">)/ig;

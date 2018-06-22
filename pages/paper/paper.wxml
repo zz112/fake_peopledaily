@@ -4,7 +4,7 @@
     <swiper class='paper-swiper' style='width:{{windowWidth*2}}rpx;height:{{windowHeight*2}}rpx;' indicator-dots="true" indicator-active-color="#589ad5">
       <block wx:for="{{paperInfo}}" wx:key="*this">
         <swiper-item>
-          <image style='width:{{windowWidth*2}}rpx;height:{{windowHeight*2}}rpx;' src="{{item.imgSrc}}" bindtap='toArticle' data-pagenum="{{1}}"></image>
+          <image style='width:100%;height:100%;' src="{{item.imgSrc}}" bindtap='toArticle' data-pagenum="{{1}}"></image>
         </swiper-item>
       </block>
 
