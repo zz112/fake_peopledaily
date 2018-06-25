@@ -1,1 +1,13 @@
-/* pages/article/article.wxss */
+.page-contain{
+  position: relative;
+  width: 100%;
+}
+
+.article-contain{
+  position: relative;
+  width: 100%;
+}
+.article-header{
+  color: #fff;
+  background-color: #c30124;
+}

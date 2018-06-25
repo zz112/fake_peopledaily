@@ -61,7 +61,7 @@ var articleExtract = function(html, newsHref, pagenum) {
   }
 
   /*************标题*********************/
-  h1 = titleHtml.match(/<h1>([\s\S]+?)<\/h1>/i)[1]; //标题肯定存在，所以用 +
+  h1 = titleHtml.match(/<h1>([\s\S]+?)<\/h1>/i)[1].split('<br>'); //标题肯定存在，所以用 +,有些标题存在用<br>换行
   h2 = titleHtml.match(/<h2>([\s\S]*?)<\/h2>/i)[1] //副标题不一定存在，所以用 *
   h3 = titleHtml.match(/<h3>([\s\S]*?)<\/h3>/i)[1] //引标题不一定存在，所以用 *
   h4 = titleHtml.match(/<h4>([\s\S]*?)<\/h4>/i)[1] //h4不知道是啥标题，所以用 *

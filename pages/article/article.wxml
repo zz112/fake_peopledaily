@@ -4,18 +4,20 @@
   <view class="article-contain">
     <view class="article-header">
       <view wx:if="{{articleObj.titleObj.introTitle}}" class="header-introtitle">{{articleObj.titleObj.introTitle}}</view>
-      <view wx:if="{{articleObj.titleObj.title}}" class="header-title">{{articleObj.titleObj.title}}</view>
+      <view wx:if="{{articleObj.titleObj.title.length>0}}" class="header-title">
+        <view w:for="{{articleObj.titleObj.title}}" wx:key="index">{{item}}</view>
+      {{articleObj.titleObj.title}}</view>
       <view wx:if="{{articleObj.titleObj.subTitle}}" class="header-subTitle">{{articleObj.titleObj.subTitle}}</view>
       <view wx:if="{{articleObj.titleObj.authors}}" class="header-authors">{{articleObj.titleObj.authors}}</view>
     </view>
     <view class="article-attachment" wx:if="{{articleObj.imgArray}}">
-      <view class="attachment-img" wx:for="{{articleObj.imgArray}}">
+      <view class="attachment-img" wx:for="{{articleObj.imgArray}}"  wx:key="index">
         <image src="{{item.imgSrc}}" mode='widthFix'></image>
         <view class="attachment-alt" wx:if="{{item.imgAlt}}">{{item.imgAlt}}</view>
       </view>
     </view>
     <view class="article-content" wx:if="{{articleObj.contentArray}}">
-      <view class='content-p {{item.strong}}' wx:for="{{articleObj.contentArray}}">
+      <view class='content-p {{item.strong}}' wx:for="{{articleObj.contentArray}}" wx:key="index">
         <text decode='true'>{{item.text}}</text>
       </view>
     </view>
